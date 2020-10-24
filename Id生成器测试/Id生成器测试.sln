@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Id生成器测试", "Id生成器测试.vcxproj", "{225B3428-C22C-4FB6-9F11-35FEEF0A1F0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{225B3428-C22C-4FB6-9F11-35FEEF0A1F0C}.Debug|x64.ActiveCfg = Debug|x64
+		{225B3428-C22C-4FB6-9F11-35FEEF0A1F0C}.Debug|x64.Build.0 = Debug|x64
+		{225B3428-C22C-4FB6-9F11-35FEEF0A1F0C}.Debug|x86.ActiveCfg = Debug|Win32
+		{225B3428-C22C-4FB6-9F11-35FEEF0A1F0C}.Debug|x86.Build.0 = Debug|Win32
+		{225B3428-C22C-4FB6-9F11-35FEEF0A1F0C}.Release|x64.ActiveCfg = Release|x64
+		{225B3428-C22C-4FB6-9F11-35FEEF0A1F0C}.Release|x64.Build.0 = Release|x64
+		{225B3428-C22C-4FB6-9F11-35FEEF0A1F0C}.Release|x86.ActiveCfg = Release|Win32
+		{225B3428-C22C-4FB6-9F11-35FEEF0A1F0C}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4DC1E6CE-4923-4E3F-9455-26E2B3DCF1E5}
+	EndGlobalSection
+EndGlobal

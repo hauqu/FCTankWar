@@ -3,7 +3,7 @@
 #include<vector>
 #include<ctime>
 #include<string>
-
+#include<list>
 enum class objectCate//物体的几种类型
 {
 	playerTank=0, enemyTank, playerBullet,

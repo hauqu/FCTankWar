@@ -1,6 +1,12 @@
 #pragma once
-#include"baseStruct.h"
+#include<list>
+#include<ctime>
 using namespace std;
+enum class objectCate//物体的几种类型
+{
+	playerTank = 0, enemyTank, playerBullet,
+	enemyBullet, space, wall
+};
 class IdCreater
 {
 public:

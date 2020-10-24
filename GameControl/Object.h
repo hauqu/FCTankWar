@@ -1,5 +1,5 @@
 #pragma once
-
+#include"baseStruct.h"
 //游戏的基本类型 矩形物体
 
 class Object

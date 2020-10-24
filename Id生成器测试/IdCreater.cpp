@@ -1,6 +1,6 @@
 #include "IdCreater.h"
 
-IdCreater::IdCreater(int nc) :numberCate(nc)
+IdCreater::IdCreater(int nc):numberCate(nc)
 {
 	srand(time(nullptr));
 	data.push_back(0);
@@ -13,8 +13,8 @@ int IdCreater::out()
 
 	while (true)
 	{
-		r = rand() % numberCate - 1 + 1;
-		if (able(r) == true)
+		r = rand() % numberCate-1 + 1;
+		if (able(r)==true)
 			break;
 	}
 	data.push_back(r);
@@ -29,5 +29,5 @@ bool IdCreater::able(int id)
 		if (*i == id) return false;
 	}
 	return true;
-
+	
 }
