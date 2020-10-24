@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IdCreater.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -130,6 +131,7 @@
   <ItemGroup>
     <ClInclude Include="baseStruct.h" />
     <ClInclude Include="GameControl.h" />
+    <ClInclude Include="IdCreater.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Object.h" />
   </ItemGroup>

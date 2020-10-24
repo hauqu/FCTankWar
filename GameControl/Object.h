@@ -1,11 +1,7 @@
 #pragma once
 
 //游戏的基本类型 矩形物体
-enum class objectCate//物体的几种类型
-{
-	playerTank, enemyTank, playerBullet,
-	enemyBullet, space,wall
-};
+
 class Object
 {
 public:
