@@ -4,6 +4,9 @@
 /*
 //test 1
 文件的格式与读取方法是相互绑定的
+前两行为 行数，列数
+然后跟二维数组 表示类型
+
 
 
 */
@@ -19,11 +22,12 @@ Map::Map():mapName("map_")
 	MaxH = 0;
 }
 
+
 bool Map::loadMap(unsigned int level)
 {
 
 	string s = to_string(level);
-	string fileName = "map_";
+	string fileName = mapName;
 	fileName += s;
 	fileName += ".txt";
 	//确定文件名称，例如map_1.txt
@@ -93,7 +97,7 @@ bool Map::loadMap(unsigned int level)
 	}
 
 
-	return false;
+	return true;
 }
 
 
@@ -106,7 +110,7 @@ inline objectCate Map::c_to_objectCate(char c)
 	case '1':
 		return objectCate::wall;
 	case '2':
-		return objectCate::StrongWall;
+		return objectCate::strongWall;
 	case '3':
 		return objectCate::water;
 	case '4':

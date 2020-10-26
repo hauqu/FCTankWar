@@ -8,6 +8,6 @@
 enum class objectCate//物体的几种类型
 {
 	playerTank=0, enemyTank, playerBullet,
-	enemyBullet, space, wall,EnemyBase,playerBase,
-	falg,water,galss,StrongWall
+	enemyBullet, space, wall,enemyBase,playerBase,
+	falg,water,galss,strongWall
 };

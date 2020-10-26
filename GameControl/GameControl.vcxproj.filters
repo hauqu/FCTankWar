@@ -47,6 +47,15 @@
     <ClInclude Include="READMEtxt">
       <Filter>资源文件</Filter>
     </ClInclude>
+    <ClInclude Include="enemyTank.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="playerTank.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="map_1.txt">

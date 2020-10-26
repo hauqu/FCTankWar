@@ -23,7 +23,7 @@ public:
 	Map(string name);//从文件中加载必要信息
 	Map();//从文件中加载必要信息
 	vector<vector<Object>>data;
-	bool loadMap(unsigned level);//加载某一关卡地图
+	bool loadMap(unsigned int level);//加载某一关卡地图
 	objectCate c_to_objectCate(char c);
 private:
 	const string mapName;

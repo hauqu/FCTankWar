@@ -130,10 +130,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="baseStruct.h" />
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="enemyTank.h" />
     <ClInclude Include="GameControl.h" />
     <ClInclude Include="IdCreater.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="playerTank.h" />
     <ClInclude Include="READMEtxt" />
   </ItemGroup>
   <ItemGroup>
