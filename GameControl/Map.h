@@ -2,7 +2,7 @@
 #include"Object.h"
 #include"baseStruct.h"
 using namespace std;
-//to do 设计map 的date的数据结构
+// 设计map 的date的数据结构
 /*
 包含地图信息，包括地图文件读取
 检测碰撞时只需要检测物体附近的物体
