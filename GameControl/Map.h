@@ -20,8 +20,13 @@ private:
 	//可用范围 为行列数-1 用于简化边界处理
 	
 public:
-	Map(int level);//从文件中加载必要信息
+	Map(string name);//从文件中加载必要信息
+	Map();//从文件中加载必要信息
 	vector<vector<Object>>data;
+	bool loadMap(unsigned level);//加载某一关卡地图
+	objectCate c_to_objectCate(char c);
+private:
+	const string mapName;
 	
 };
 

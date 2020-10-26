@@ -15,37 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="源.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IdCreater.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameControl.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="baseStruct.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IdCreater.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="READMEtxt">
-      <Filter>资源文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
