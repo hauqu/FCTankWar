@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="cmdCreater.cpp" />
     <ClCompile Include="IdCreater.cpp" />
     <ClCompile Include="main.cpp" />
