@@ -15,6 +15,9 @@ int MAPOBJECT_W = TANK_W;
 int MAPOBJECT_H = TANK_H;
 int WIN_W = TANK_W * MAP_W;
 int WIN_H = TANK_H * MAP_H;
+int TANK_STEP = TANK_H;//移动步长
+int BULLET_STEP = BULLET_H;
+
 //上述常量主要用于绘图参数
 enum class objectCate//物体的几种类型
 {

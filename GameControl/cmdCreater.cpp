@@ -41,3 +41,31 @@ inline cmd cmdCreater::int_to_cmd(int c)
 		break;
 	}
 }
+
+inline cmd cmdCreater::c_to_cmd(char c)
+{
+	switch (c)
+	{
+	
+	case 'w':
+	case 'W':
+		return cmd::Up; break;
+	case 'D':
+	case 'd':
+		return cmd::Right; break;
+	case 's':
+	case 'S':
+		return cmd::Down; break;
+	case 'a':
+	case 'A':
+		return cmd::Left; break;
+	
+	case ' ':
+		return cmd::Attack; break;
+	case 33:
+		return cmd::Explosion; break;
+	default:
+		return cmd::NA; break;
+		break;
+	}
+}

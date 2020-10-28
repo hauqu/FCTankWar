@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="cmdCreater.cpp" />
+    <ClCompile Include="GameControl.cpp" />
     <ClCompile Include="IdCreater.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />

@@ -5,7 +5,8 @@ class cmdCreater
 {
 public:
 	cmdCreater();
-	cmd int_to_cmd(int c);
+	 cmd int_to_cmd(int c);
+	static cmd c_to_cmd(char c);
 	deque<cmd>out(int ncmd);
 
 
