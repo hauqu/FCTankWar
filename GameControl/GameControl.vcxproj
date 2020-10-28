@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cmdCreater.cpp" />
     <ClCompile Include="IdCreater.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -131,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="baseStruct.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="cmdCreater.h" />
     <ClInclude Include="enemyTank.h" />
     <ClInclude Include="GameControl.h" />
     <ClInclude Include="IdCreater.h" />

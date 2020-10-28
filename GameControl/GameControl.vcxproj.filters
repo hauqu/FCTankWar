@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\坦克相关类">
+      <UniqueIdentifier>{15e0b4f9-4586-40c4-aed3-8725f03129ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\生成器">
+      <UniqueIdentifier>{5ff8d411-1d51-42b6-9554-f9be7ab7cb0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -27,6 +33,9 @@
     <ClCompile Include="IdCreater.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="cmdCreater.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameControl.h">
@@ -38,23 +47,26 @@
     <ClInclude Include="Object.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IdCreater.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="READMEtxt">
       <Filter>资源文件</Filter>
     </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>头文件\坦克相关类</Filter>
+    </ClInclude>
     <ClInclude Include="enemyTank.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\坦克相关类</Filter>
     </ClInclude>
     <ClInclude Include="playerTank.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\坦克相关类</Filter>
     </ClInclude>
-    <ClInclude Include="bullet.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="Map.h">
+      <Filter>头文件\生成器</Filter>
+    </ClInclude>
+    <ClInclude Include="cmdCreater.h">
+      <Filter>头文件\生成器</Filter>
+    </ClInclude>
+    <ClInclude Include="IdCreater.h">
+      <Filter>头文件\生成器</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
