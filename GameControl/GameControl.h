@@ -17,9 +17,13 @@ public:
 	IdCreater idMaker;//id生成器
 	cmdCreater cmdMaker;//指令生成器
 	list<enemyTank>enemys;//所有敌人
-	list<bullet>bullets;//所有子弹
+	list<bullet>enemybullets;//所有敌人子弹
+	list<bullet>playerbullets;//所有玩家子弹
 	playerTank p;//玩家，1个
+	bool live;//玩家是否生存
+	void die(Object*o);//死亡处理
 public:
+	bool run();//每帧游戏需要计算和绘制集合
 	int getcmd(char c);//获取控制字符
 	
 };

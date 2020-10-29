@@ -18,6 +18,9 @@ int WIN_H = TANK_H * MAP_H;
 int TANK_STEP = TANK_H;//移动步长
 int BULLET_STEP = BULLET_H;
 
+int MAX_PLAYER_BULLET=1;
+//玩家最多能发射的炮弹，当达到后无法执行attack
+
 //上述常量主要用于绘图参数
 enum class objectCate//物体的几种类型
 {

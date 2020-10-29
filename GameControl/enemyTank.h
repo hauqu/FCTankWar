@@ -14,6 +14,8 @@ public:
 	int Hp;//血量
 	int level;//等级
 	int bulletId;//自己的子弹
+	cmd dir;
+	int attack;
 	deque<cmd>attion;//即将执行的行动
 
 };

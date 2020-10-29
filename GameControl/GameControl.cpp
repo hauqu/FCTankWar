@@ -19,13 +19,24 @@ int GameControl::getcmd(char c)
 		break;
 	
 	case cmd::Attack:
-
+//to  do  处理剩余命令的实现
+		if (playerbullets.size()<MAX_PLAYER_BULLET)
+		{
+			bullet temp(&p, p.dir, p.attack);
+			temp.id = idMaker.out();
+			playerbullets.push_back(temp);
+		}
 		break;
 	case cmd::Explosion:
+		live = false;
+		die(&p);
 		break;
 	default:
 		break;
 	}
 
 	return 0;
+}
+void GameControl::die(Object* o)
+{
 }

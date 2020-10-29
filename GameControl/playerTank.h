@@ -10,6 +10,8 @@ class playerTank:public Object
 public:
 	int Hp;//血量
 	int level;//等级
+	int attack;
 	int bulletId;//自己的子弹
+	cmd dir;
 
 };
