@@ -23,7 +23,10 @@ public:
 	bool live;//玩家是否生存
 	void die(Object*o);//死亡处理
 public:
-	bool run();//每帧游戏需要计算和绘制集合
+	int run();//每帧游戏需要计算和绘制集合
 	int getcmd(char c);//获取控制字符
-	
+private:
+	void bullet_move(Object*o,cmd d);//移动一个对象
+	void enemy_act(enemyTank& t);
+	void enemy_move(enemyTank& t);
 };

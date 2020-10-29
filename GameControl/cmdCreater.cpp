@@ -16,6 +16,12 @@ deque<cmd> cmdCreater::out(int ncmd)
 	return cs;
 	
 }
+
+deque<cmd> cmdCreater::out(Aicmd c)
+{
+	return deque<cmd>();
+}
+
 inline cmd cmdCreater::int_to_cmd(int c)
 {
 	switch (c)
@@ -35,7 +41,8 @@ inline cmd cmdCreater::int_to_cmd(int c)
 	case 6:
 		return cmd::Attack; break;
 	case 7:
-		return cmd::Explosion; break;
+		//return cmd::Explosion; break;
+		return cmd::NA; break;//²»ÇáÒ×±¬Õ¨
 	default:
 		return cmd::NA; break;
 		break;

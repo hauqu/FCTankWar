@@ -16,7 +16,8 @@ public:
 	int bulletId;//自己的子弹
 	cmd dir;
 	int attack;
-	deque<cmd>attion;//即将执行的行动
+	deque<cmd>action;//即将执行的行动
+
 
 };
 
