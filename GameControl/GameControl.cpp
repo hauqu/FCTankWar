@@ -7,7 +7,7 @@ int GameControl::run()
 	1.读取playerbulletlist 执行move
 	2.读取enemybulletlist ，执行move
 	3.读取enemylist 执行每个对象的指令
-	4.检测碰撞
+	4.检测碰撞f
 	5.绘制
 	6.等待
 	*/
