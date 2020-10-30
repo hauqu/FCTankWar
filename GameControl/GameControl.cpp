@@ -4,19 +4,49 @@ int GameControl::run()
 {
 	//执行顺序
 	/*
-	1.读取playerbulletlist 执行move
-	2.读取enemybulletlist ，执行move
-	3.读取enemylist 执行每个对象的指令
-	4.检测碰撞f
-	5.绘制
-	6.等待
+	
 	*/
+	//p  b move
 	for (list<bullet>::iterator i = playerbullets.begin(); i !=playerbullets.end(); i++)
 		bullet_move(&(*i), (*i).dir);
-	
+	//e b move
 	for (auto i = enemybullets.begin(); i !=enemybullets.end(); i++)
 		bullet_move(&(*i), (*i).dir);
 	
+	//检测b  碰撞
+	for (list<bullet>::iterator i = playerbullets.begin(); i != playerbullets.end(); i++)
+	{
+		for (auto j = enemys.begin(); j != enemys.end(); i++)
+		{
+			if((*i).collision(*j))
+			{
+				//处理玩家子弹与敌人
+				(*i).available = false;//子弹失效
+				(*j).Hp -= (*i).attack;//减少血量
+				if ((*j).Hp<=0)//死亡
+					(*j).available = false;
+			}
+		}
+		//检测 b t
+
+		/*
+		对于 一个对象与地图来说，根据自身的x，y
+		能够大致确定一个范围，
+		减少比较次数
+		x/mapW
+		y/mapH
+		确定了一个元素
+		//to do 以空间换时间，提高执行效率
+		*/
+		
+
+
+
+	}
+
+
+
+
 	for (auto i = enemys.begin(); i != enemys.end(); i++)
 	{
 		if ((*i).available==false)
@@ -28,14 +58,9 @@ int GameControl::run()
 			enemy_act(*i);
 		}
 	}
-	//检测碰撞，在移动方法中需要进行检测，
-	/*
-	1.玩家子弹与敌人
-	2.敌人子弹与玩家
-	3.子弹与地图
+
 	
-	
-	*/
+
 
 	return 0;
 }
@@ -109,6 +134,9 @@ void GameControl::enemy_act(enemyTank& t)
 }
 inline void GameControl::bullet_move(Object* o, cmd d)
 {
+	//子弹移动前检验碰撞？
+	//先移动，后处理
+
 	switch (d)
 	{
 	case cmd::Up:
@@ -124,5 +152,52 @@ inline void GameControl::bullet_move(Object* o, cmd d)
 		break;
 	}
 }
+void GameControl::clearDieObject()
+{
+	//迭代器删除之后无效，需要删除前保存
 
+
+	auto i = playerbullets.begin();
+	while (i != playerbullets.end())
+	{
+		if ((*i).available == false)
+			playerbullets.erase(i++);//删除当前位置并后移
+		else i++;
+	}//玩家子弹
+	auto it = enemybullets.begin();
+	while (it!=enemybullets.end())
+	{
+		if ((*it).available == false)
+			enemybullets.erase(it++);//删除当前位置并后移
+		else it++;
+	}//敌人子弹
+	
+	auto it_e = enemys.begin();
+	while (it_e != enemys.end())
+	{
+		if ((*it_e).available == false)
+			enemys.erase(it_e++);//删除当前位置并后移
+		else it_e++;
+	}//敌人
+
+}
+
+void GameControl::initMap()
+{
+	//依照date的存储结构来确定相对位置
+	//以地图元素长宽常量决定坐标
+	for (int i = 0; i < mapDate.data.size(); i++)
+	{
+		for(int j=0;j<mapDate.data[i].size();j++)
+		{
+			mapDate.data[i][j].available = true;
+			mapDate.data[i][j].id = idMaker.out();
+			mapDate.data[i][j].w = MAPOBJECT_W;
+			mapDate.data[i][j].h = MAPOBJECT_H;
+			mapDate.data[i][j].x = i * MAPOBJECT_W;
+			mapDate.data[i][j].y = j * MAPOBJECT_H;
+			//成员 cate 已经在map 类里初始化
+		}
+	}
+}
 

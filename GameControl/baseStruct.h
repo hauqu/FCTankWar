@@ -7,7 +7,7 @@
 #include<fstream>//map类文件处理
 #include<deque>//存储指令序列
 
-//声明一些常量
+//声明一些常量(不一定)
 int TANK_W=32; int TANK_H = 32;
 int BULLET_W = 16; int BULLET_H = 16;
 int MAP_W=10; int MAP_H = 10;

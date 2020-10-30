@@ -89,8 +89,7 @@ bool Map::loadMap(unsigned int level)
 			map 类只能决定自己的类型
 			不能决定自己的大小，坐标 id 和是否可用
 			具体的需要在GameControl实现
-			
-			
+			详情见 其 initMap()方法
 			*/
 			
 		}

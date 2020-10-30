@@ -15,9 +15,9 @@ public:
 	int h;//³¤¶È
 	
 	Object(int x, int y, int w, int h,objectCate oc);
-	bool collision(const Object& o)const;
+	bool collision(const Object& o)const;//Åö×²¼ì²â Åö×²·µÕæ
 	Object();
 	int ID(void)const;
-	//Åö×²¼ì²â Åö×²·µÕæ
+	
 };
 
