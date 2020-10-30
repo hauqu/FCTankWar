@@ -37,6 +37,8 @@ int GameControl::run()
 		y/mapH
 		确定了一个元素
 		//to do 以空间换时间，提高执行效率
+		10.30
+
 		*/
 		
 
