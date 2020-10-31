@@ -40,31 +40,108 @@ int GameControl::run()
 		10.30
 
 		*/
+		int w = (*i).x / MAP_W;
+		int h = (*i).y / MAP_H; 
+
+		/*
+		mapDate.data[w][h]
+		该元素为子弹 左下角元素
+		所以需要检测 左上，右上，左下，右下
 		
-
-
-
-	}
-
-
-
-
-	for (auto i = enemys.begin(); i != enemys.end(); i++)
-	{
-		if ((*i).available==false)
+		*/
+		//首先检测碰撞元素
+		w++; h++;
+		switch (mapDate.data[w][h].cate)
 		{
-			die(&(*i));
-			enemys.erase(i);
-		}else
-		{
-			enemy_act(*i);
+		case objectCate::water:
+		case objectCate::space:
+			//通过
+			break;
+		case objectCate::wall:
+
+			//同时摧毁
+			mapDate.data[w][h].cate = objectCate::space;
+			(*i).available = false;
+			break;
+		case objectCate::falg:
+		case objectCate::strongWall:
+		case objectCate::enemyBase:
+			//子弹摧毁
+			(*i).available = false;
+			break;
+		
+		case objectCate::playerBase:
+			//攻击自己的基地
+			//游戏结束
+			p.available = false;
+			break;
+		default:
+			break;
 		}
+
+
+
 	}
+
+	for (list<bullet>::iterator i = enemybullets.begin(); i != playerbullets.end(); i++)
+	{
+		
+		if ((*i).collision(p))//检测是否击中玩家
+		{
+			p.Hp -= (*i).attack;
+			if (p.Hp <= 0) p.available = false;
+			(*i).available = false;
+		}
+
+
+		int w = (*i).x / MAP_W;
+		int h = (*i).y / MAP_H;
+
+		/*
+		mapDate.data[w][h]
+		该元素为子弹 左下角元素
+		所以需要检测 左上，右上，左下，右下
+
+		*/
+		//首先检测碰撞元素
+		w++; h++;
+		switch (mapDate.data[w][h].cate)
+		{
+		case objectCate::water:
+		case objectCate::space:
+			//通过
+			break;
+		case objectCate::wall:
+
+			//同时摧毁
+			mapDate.data[w][h].cate = objectCate::space;
+			(*i).available = false;
+			break;
+		case objectCate::falg:
+		case objectCate::strongWall:
+		case objectCate::enemyBase:
+			//子弹摧毁
+			(*i).available = false;
+			break;
+
+		case objectCate::playerBase:
+			//攻击玩家的基地
+			//游戏结束
+			p.available = false;
+			break;
+		default:
+			break;
+		}
+
+
+
+	}
+	
 
 	
 
 
-	return 0;
+	return 1;//执行成功
 }
 
 int GameControl::getcmd(char c)
