@@ -27,7 +27,7 @@ enum class cmd//基础指令
 	Explosion,//自爆
 };//GameControl 会读取enemyTank的指令队列并执行相关操作
 
- const int baseCmdCateNumber = 8;//基础指令的种类个数
+const int baseCmdCateNumber = 8;//基础指令的种类个数
 enum class Aicmd
 {
 	random,//随机

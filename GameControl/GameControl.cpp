@@ -1,29 +1,17 @@
 #include "GameControl.h"
 //方法过于混乱，需要重新检查各类构造函数
-int TANK_W = 32; int TANK_H = 32;
-int BULLET_W = 16; int BULLET_H = 16;
-int MAP_W = 10; int MAP_H = 10;
-int MAPOBJECT_W = TANK_W;
-int MAPOBJECT_H = TANK_H;
-int WIN_W = TANK_W * MAP_W;
-int WIN_H = TANK_H * MAP_H;
-int TANK_STEP = TANK_H;//移动步长
-int BULLET_STEP = BULLET_H;
 
-int MAX_PLAYER_BULLET = 1;
 
-GameControl::GameControl():
-	mapDate(Map()),
-	idMaker(IdCreater()),
-	cmdMaker(cmdCreater()),
-	live(false)
+GameControl::GameControl()	
 {
-	mapDate.loadMap(1);//自动加载第一关
+	p = playerTank();
+	
 	mapDate.playerbase.w = MAP_W;
 	mapDate.playerbase.h = MAP_H;
 	mapDate.playerbase.x *= MAP_W;
 	mapDate.playerbase.y *= MAP_H;
-	for (auto i = mapDate.enemybases.begin(); 
+	live = false;
+	for (auto i = mapDate.enemybases.begin();
 		i != mapDate.enemybases.end();  i++)
 	{
 		(*i).w = MAP_W;
@@ -32,8 +20,6 @@ GameControl::GameControl():
 		(*i).y *= MAP_H;
 	}
 	MaxEnemys = 4;
-	
-
 }
 int GameControl::start(int level)
 {
@@ -358,7 +344,34 @@ int GameControl::getcmd(char c)
 
 	return 0;
 }
+bool GameControl::CreatEnemy(enemyTank e)
+{
 
+	//生成要求，1.当前坦克数量小于最大数
+	//2.敌人基地没有其他坦克
+	for (auto i = mapDate.enemybases.begin(); i != mapDate.enemybases.end(); i++)
+	{
+		bool falg = true;//该基地是否可用
+		for (auto j = enemys.begin(); j != enemys.end(); j++)
+		{
+				if ((*i).available)
+				if (collision(&(*i), &(*j)))
+					falg = false;//有坦克，不可用
+		}
+		if (falg)//生成一个就结束
+		{
+			e.x = (*i).x;
+			e.y = (*i).y;
+			e.id = idMaker.out();
+			e.available = true;
+			enemys.push_back(e);
+			return true;
+
+		}
+	}
+	return false;//
+
+}
 
 
 

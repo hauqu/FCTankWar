@@ -42,6 +42,12 @@
     <ClCompile Include="GameControl.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="enemyTank.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="playerTank.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameControl.h">
@@ -73,9 +79,6 @@
     </ClInclude>
     <ClInclude Include="IdCreater.h">
       <Filter>头文件\生成器</Filter>
-    </ClInclude>
-    <ClInclude Include="constDate.h">
-      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

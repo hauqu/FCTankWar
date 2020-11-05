@@ -1,6 +1,11 @@
 #pragma once
 #include"baseStruct.h"
 using namespace std;
+/*
+该类负责每个敌人对象的行动
+因为生成aicmd 所以需要区分每个敌人，每个元素
+故为每个object 分配id
+*/
 class cmdCreater
 {
 public:

@@ -101,11 +101,8 @@ bool Map::loadMap(unsigned int level)
 			
 		}
 	}
-
-
 	return true;
 }
-
 
 inline objectCate Map::c_to_objectCate(char c)
 {

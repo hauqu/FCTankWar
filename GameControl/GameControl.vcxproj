@@ -125,17 +125,18 @@
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="cmdCreater.cpp" />
+    <ClCompile Include="enemyTank.cpp" />
     <ClCompile Include="GameControl.cpp" />
     <ClCompile Include="IdCreater.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="playerTank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="baseStruct.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="cmdCreater.h" />
-    <ClInclude Include="constDate.h" />
     <ClInclude Include="enemyTank.h" />
     <ClInclude Include="GameControl.h" />
     <ClInclude Include="IdCreater.h" />
