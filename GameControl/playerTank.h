@@ -13,5 +13,7 @@ public:
 	int attack;
 	int bulletId;//自己的子弹
 	cmd dir;
+	playerTank();
+	~playerTank(){}
 
 };

@@ -74,6 +74,9 @@
     <ClInclude Include="IdCreater.h">
       <Filter>头文件\生成器</Filter>
     </ClInclude>
+    <ClInclude Include="constDate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="map_1.txt">

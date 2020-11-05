@@ -1,9 +1,8 @@
 #include"GameControl.h"
 #include<conio.h>
 #include<graphics.h>
-
 GameControl mainGame;
-void Draw(GameControl& gc);
+void Draw(GameControl &gc);
 int main()
 {
 	mainGame.start(1);
@@ -13,7 +12,7 @@ int main()
 		{
 			mainGame.run();
 			Draw(mainGame);
-			
+			_sleep(200);
 		}
 		char c = _getch();
 		mainGame.getcmd(c);

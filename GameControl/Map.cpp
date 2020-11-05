@@ -14,12 +14,15 @@ Map::Map(string name):mapName(name)
 {
 	MaxW = 0;
 	MaxH = 0;
+	playerbase = Object();
+	
 }
 
 Map::Map():mapName("map_")
 {
 	MaxW = 0;
 	MaxH = 0;
+	playerbase = Object();
 }
 
 
@@ -85,6 +88,10 @@ bool Map::loadMap(unsigned int level)
 				continue;
 			}
 			data[i][j].cate = c_to_objectCate(c);
+			if (data[i][j].cate == objectCate::enemyBase)
+				enemybases.push_back(Object(i,j,0,0,objectCate::enemyBase));
+			if (data[i][j].cate == objectCate::playerBase)
+				playerbase = Object(i, j, 0, 0, objectCate::playerBase);
 			/*
 			map 类只能决定自己的类型
 			不能决定自己的大小，坐标 id 和是否可用
@@ -113,13 +120,13 @@ inline objectCate Map::c_to_objectCate(char c)
 	case '3':
 		return objectCate::water;
 	case '4':
-		return objectCate::galss;
+		return objectCate::enemyBase;
 	case '5':
 		return objectCate::falg;
 	case '6':
-		return objectCate::space;
+		return objectCate::galss;
 	case '7':
-		return objectCate::space;
+		return objectCate::playerBase;
 	case '8':
 		return objectCate::space;
 

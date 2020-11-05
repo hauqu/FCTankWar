@@ -14,10 +14,10 @@ public:
 	int w;//宽度
 	int h;//长度
 	
-	Object(int x, int y, int w, int h,objectCate oc);
-	bool collision(const Object& o)const;//碰撞检测 碰撞返真
-	Object();
-	int ID(void)const;
+	Object(int x, int y, int w, int h,objectCate oc);;//有参构造available 为true
+	
+	Object();//无参构造available 为false
+	virtual ~Object(){}
 	
 };
 

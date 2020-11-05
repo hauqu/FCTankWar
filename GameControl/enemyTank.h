@@ -17,7 +17,11 @@ public:
 	cmd dir;
 	int attack;
 	deque<cmd>action;//即将执行的行动
+	enemyTank();
+	~enemyTank()
+	{
 
+	}
 
 };
 

@@ -22,8 +22,8 @@ public:
 	int attack;//攻击力
 	cmd dir;//子弹行进方向
 	int TankId;//坦克的id
-	bullet();//仅仅声明一个子弹类
-	bullet(Object*o,cmd d,int a);
+	bullet();//无参构造available 为false
+	bullet(Object*o,cmd d,int a,int id);
 	//根据坐标，指向，攻击力生成
 
 	

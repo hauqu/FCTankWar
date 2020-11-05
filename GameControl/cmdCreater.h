@@ -6,11 +6,8 @@ class cmdCreater
 public:
 	cmdCreater();
 	 cmd int_to_cmd(int c);
-	static cmd c_to_cmd(char c);
-	deque<cmd>out(int ncmd);//参数决定一次生成几个指令
-
-
-
+	
+	 deque<cmd>out(int ncmd);//参数决定一次生成几个指令
 
 	//Aicmd 需要获取地图信息，玩家信息，敌方坦克信息等等
 	deque<cmd>out(Aicmd c);

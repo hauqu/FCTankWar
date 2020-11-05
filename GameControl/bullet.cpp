@@ -13,12 +13,13 @@ bullet::bullet()
 	attack = 0;
 	dir = cmd::Stop;
 }
-bullet::bullet(Object* o, cmd d, int a)
+bullet::bullet(Object* o, cmd d, int a,int id)
 {
 	dir = d;
 	attack = a;
-	TankId = o->ID();
+	TankId = o->id;
 	available = true;
+	this->id = id;
 	switch (d)
 	{
 	case cmd::Up:
