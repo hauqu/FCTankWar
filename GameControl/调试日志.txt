@@ -1,0 +1,4 @@
+playerbullets 不可用，使用即报错
+enemybullets 正常
+
+物体碰撞判定 有问题

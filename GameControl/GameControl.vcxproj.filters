@@ -85,6 +85,9 @@
     <Text Include="map_1.txt">
       <Filter>资源文件</Filter>
     </Text>
+    <Text Include="调试日志.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="确定子弹与地图元素.png">

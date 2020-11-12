@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="map_1.txt" />
+    <Text Include="调试日志.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="确定子弹与地图元素.png" />

@@ -17,17 +17,17 @@
 
 */
 
-int TANK_W = 32; int TANK_H = 32;
-int BULLET_W = 16; int BULLET_H = 16;
-int MAP_W = 10; int MAP_H = 10;
-int MAPOBJECT_W = TANK_W;
-int MAPOBJECT_H = TANK_H;
-int WIN_W = TANK_W * MAP_W;
-int WIN_H = TANK_H * MAP_H;
-int TANK_STEP = TANK_H;//移动步长
-int BULLET_STEP = BULLET_H;
+static int TANK_W = 32; static int TANK_H = 32;
+static int BULLET_W = 16; static int BULLET_H = 16;
+static int MAP_W = 10; static int MAP_H = 10;
+static int MAPOBJECT_W = TANK_W;
+static int MAPOBJECT_H = TANK_H;
+static int WIN_W = TANK_W * MAP_W;
+static int WIN_H = TANK_H * MAP_H;
+static int TANK_STEP = 32;//移动步长
+static int BULLET_STEP = 16;
 
-int MAX_PLAYER_BULLET = 1;
+static int MAX_PLAYER_BULLET = 1;
 class GameControl
 {
 public:
@@ -36,6 +36,7 @@ public:
 	cmdCreater cmdMaker;//指令生成器
 	list<enemyTank>enemys;//所有敌人
 	list<bullet>enemybullets;//所有敌人子弹
+
 	list<bullet>playerbullets;//所有玩家子弹
 	playerTank p;//玩家，1
 	bool live;//场上是否有玩家

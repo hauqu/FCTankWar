@@ -20,6 +20,7 @@ bullet::bullet(Object* o, cmd d, int a,int id)
 	TankId = o->id;
 	available = true;
 	this->id = id;
+	w = 16; h = 16;//应当使用变量
 	switch (d)
 	{
 	case cmd::Up:
@@ -35,12 +36,11 @@ bullet::bullet(Object* o, cmd d, int a,int id)
 		this->y = o->y - o->h;
 		break;
 	case cmd::Left:
+	
 		this->y = o->y;
 		this->x = o->x - o->w;
 		break;
 	default:
-		this->x = o->x;
-		this->y = o->y + o->h;
 		break;
 	}
 }
