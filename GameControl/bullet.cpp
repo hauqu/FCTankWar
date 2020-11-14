@@ -25,20 +25,20 @@ bullet::bullet(Object* o, cmd d, int a,int id)
 	{
 	case cmd::Up:
 		this->x = o->x;
-		this->y = o->y - o->h;
+		this->y = o->y - o->h/2-h/2;
 		break;
 	case cmd::Right:
 		this->y = o->y;
-		this->x = o->x + o->w;
+		this->x = o->x + o->w/2+w/2;
 		break;
 	case cmd::Down:
 		this->x = o->x;
-		this->y = o->y + o->h;
+		this->y = o->y + o->h/2+h/2;
 		break;
 	case cmd::Left:
 	
 		this->y = o->y;
-		this->x = o->x - o->w;
+		this->x = o->x - o->w/2-w/2;
 		break;
 	default:
 		break;

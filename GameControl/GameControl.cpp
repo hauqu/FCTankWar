@@ -16,21 +16,22 @@ int GameControl::start(int level)
 {
 	mapDate.loadMap(level);
 	initMap();
-	mapDate.playerbase.w = MAP_W;
-	mapDate.playerbase.h = MAP_H;
-	mapDate.playerbase.x *= MAP_W;
-	mapDate.playerbase.y *= MAP_H;
+	mapDate.playerbase.w = TANK_W;
+	mapDate.playerbase.h = TANK_H;
+	mapDate.playerbase.x *= TANK_W;
+	mapDate.playerbase.y *= TANK_H;
 	for (auto i = mapDate.enemybases.begin();
 		i != mapDate.enemybases.end();  i++)
 	{
-		(*i).w = MAP_W;
-		(*i).h = MAP_H;
-		(*i).x *= MAP_W;
-		(*i).y *= MAP_H;
+		(*i).w = TANK_W;
+		(*i).h = TANK_H;
+		(*i).x *= TANK_W;
+		(*i).y *= TANK_H;
 	}
 	p.available = true;
-	p.x = mapDate.playerbase.x+TANK_W/2;
-	p.y = mapDate.playerbase.y+TANK_H;
+
+	p.x = mapDate.playerbase.x;
+	p.y = mapDate.playerbase.y-TANK_H;
 	p.w = TANK_W;
 	p.h = TANK_H;
 	p.id = idMaker.out();
@@ -42,16 +43,14 @@ int GameControl::start(int level)
 		e.available = true;
 		e.x = (*i).x;
 		e.y = (*i).y;
-		e.w = (*i).w;
-		e.h = (*i).h;
+		e.w = TANK_W;
+		e.h = TANK_H;
 		e.level = 1;
 		e.id = idMaker.out();
-		e.action = cmdMaker.out(8);
+		e.action = cmdMaker.out(Aicmd::stay);
 		enemys.push_back(e);
 		
 	}
-	
-	
 	
 	return 1;
 }
@@ -64,16 +63,10 @@ int GameControl::run()
 	for (list<bullet>::iterator i = playerbullets.begin(); i != playerbullets.end(); i++)
 		bullet_move(*i);
 	*/
-	if(playerbullet!=nullptr)
-	{
-		bullet_move(*playerbullet);
+	
 
-	}
 
-	//e b move
-	if(!enemybullets.empty())
-	for (auto i = enemybullets.begin(); i != enemybullets.end(); i++)
-		bullet_move(*i);
+	
 	//检测b  碰撞
 	if (playerbullet != nullptr)
 	{
@@ -162,19 +155,30 @@ int GameControl::run()
 			}
 		}
 	}
-	if(enemys.empty())
+	if(!enemys.empty())
 	for (auto i = enemys.begin(); i != enemys.end(); i++)
 	{
-		if ((*i).action.empty()==true)
+		if ((*i).action.empty())
 		{
-			(*i).action == cmdMaker.out(10);
+			(*i).action = cmdMaker.out(8);
 		}
 		else
 		{
 			act_enemy(*i);
 		}
 	}
+	if (playerbullet != nullptr)
+	{
+		if(playerbullet->available!=false)
+		bullet_move(*playerbullet);
+
+	}
 	clearDieObject();
+	//e b move
+	if (!enemybullets.empty())
+		for (auto i = enemybullets.begin(); i != enemybullets.end(); i++)
+			if((*i).available!=false)
+			bullet_move(*i);
 	return 1;
 }
 
@@ -190,26 +194,22 @@ void GameControl::initMap()
 			mapDate.data[i][j].id = idMaker.out();
 			mapDate.data[i][j].w = MAPOBJECT_W;
 			mapDate.data[i][j].h = MAPOBJECT_H;
-			if (mapDate.data[i][j].cate == objectCate::space) 
-			{
-				mapDate.data[i][j].x =-100;
-				mapDate.data[i][j].y = -100;
-			}
-			else {
-				mapDate.data[i][j].x = i * MAPOBJECT_W;
-				mapDate.data[i][j].y = j * MAPOBJECT_H;
-			}
+			mapDate.data[i][j].x = i * MAPOBJECT_W;
+			mapDate.data[i][j].y = j * MAPOBJECT_H;
+			
 			//成员 cate 已经在map 类里初始化
 		}
 	}
 }
 bool GameControl::collision(Object* o1, Object* o2)
 {
+
+	
 	 if((o1->x - o2->x)*(o1->x - o2->x)<
-		 (o1->w+o2->w)* (o1->w + o2->w))
+		 (o1->w/2+o2->w/2)* (o1->w/2 + o2->w/2))
 	 {
 		 if ((o1->y - o2->y) * (o1->y - o2->y) <
-			 (o1->h + o2->h) * (o1->h + o2->h))
+			 (o1->h/2 + o2->h/2) * (o1->h/2 + o2->h/2))
 			 return true;
 	 }
 	 return false;
@@ -223,71 +223,95 @@ bool GameControl::collision(Object* o1, Object* o2)
 	switch (b.dir)
 	{
 	case cmd::Up:
-		b.y -= BULLET_STEP;
+		b.y -= BULLET_STEP/2;
 		break;
 	case cmd::Down:
-		b.y += BULLET_STEP; 
+		b.y += BULLET_STEP/2; 
 		break;
 	case cmd::Left:
-		b.x -= BULLET_STEP;
+		b.x -= BULLET_STEP/2;
 		break;
 	case cmd::Right:
-		b.x += BULLET_STEP;
+		b.x += BULLET_STEP/2;
 		break;
 	default:
 		break;
 	}
 }
 
-int GameControl::act_enemy(enemyTank& e)
-{
-	cmd con = e.action.back();
-	e.action.pop_back();
-	if (con==cmd::NA||con==cmd::Stop)
-	{
-		return 0;
-	}
-	if (con==cmd::Attack)
-	{
-		bullet temp(&e,e.dir,e.attack,idMaker.out());
-		enemybullets.push_back(temp);
-		return 1;
-	}
-	else if(con==cmd::Explosion)
-	{
-		e.available = false;
-		return 1;
-	}else if(con==cmd::Up|| con == cmd::Right || 
-		con == cmd::Left || con == cmd::Down  )
-	{
-		int x = e.x; int y = e.y;
-		switch (con)
-		{
-		
-		case cmd::Up:
-			y -= TANK_STEP;
-			break;
-		case cmd::Right:
-			x += TANK_STEP;
-			break;
-		case cmd::Down:
-			y += TANK_STEP;
-			break;
-		case cmd::Left:
-			x -= TANK_STEP;
-			break;
-		default:
-			break;
-		}
-		if (!collision(&e,&mapDate.data[x/TANK_W][x/TANK_H]))
-		{
-			e.x = x; e.y = y;
-		}
-		return 1;
-	}
+ int GameControl::act_enemy(enemyTank& e)
+ {
+	 cmd con = e.action.back();
+	 e.action.pop_back();
+	 if (con == cmd::NA || con == cmd::Stop)
+	 {
+		 return 0;
+	 }
+	 if (con == cmd::Attack)
+	 {
+		 //bullet temp(&e,e.dir,e.attack,idMaker.out());
+		 //enemybullets.push_back(temp);
+		 return 1;
+	 }
+	 else if (con == cmd::Explosion)
+	 {
+		 e.available = false;
+		 return 1;
+	 }
+	 else if (con == cmd::Up || con == cmd::Right ||
+		 con == cmd::Left || con == cmd::Down)
+	 {
+		 if(con!=e.dir)
+		 {
+			 e.dir = con;
+			 return 1;
+		 }
+		 int x = e.x; int y = e.y;
+		 switch (con)
+		 {
+		 case cmd::Up:
+			 y -= TANK_STEP;
+			 break;
+		 case cmd::Right:
+			 x += TANK_STEP;
+			 break;
+		 case cmd::Down:
+			 y += TANK_STEP;
+			 break;
+		 case cmd::Left:
+			 x -= TANK_STEP;
+			 break;
+		 default:
+			 break;
+		 }
+		 int i = x / TANK_W;
+		 int j = y / TANK_H;
+		 //
+		 if (collision(&e, &mapDate.data[i][j]))
+		 {
+			 switch (mapDate.data[i][j].cate)
+			 {
+			 case objectCate::wall:
+			 case objectCate::playerBase:
+			 case objectCate::strongWall:
+				 //do nothing
+				 e.dir = con;
+				 break;
+			 case objectCate::space:
+			 case objectCate::enemyBase:
+				 e.x = x;
+				 e.y = y;
+				 e.dir = con;
+			 default:
+				 break;
+			 };
 
-	return 0;
-}
+			 return 1;
+		 }
+
+		 return 0;
+	 }
+ }
 cmd GameControl::c_to_cmd(char c)
 {
 	switch (c)
@@ -372,36 +396,69 @@ int GameControl::getcmd(char c)
 	}
 	else if (con == cmd::Up || con == cmd::Right ||
 		con == cmd::Left || con == cmd::Down)
-	{
-		int x = p.x; int y = p.y;
-		switch (con)
 		{
+			if (con != p.dir){	p.dir = con;return 1;}//转向
+			else 
+			{
+				int x = p.x; int y = p.y;
+				switch (con)
+				{
 
-		case cmd::Up:
-			y -= TANK_STEP;
-			break;
-		case cmd::Right:
-			x += TANK_STEP;
-			break;
-		case cmd::Down:
-			y += TANK_STEP;
-			break;
-		case cmd::Left:
-			x -= TANK_STEP;
-			break;
-		default:
-			break;
+				case cmd::Up:
+					y -= TANK_STEP;
+					break;
+				case cmd::Right:
+					x += TANK_STEP;
+					break;
+				case cmd::Down:
+					y += TANK_STEP;
+					break;
+				case cmd::Left:
+					x -= TANK_STEP;
+					break;
+				default:
+					break;
+				}
+				//构建移动规则 与 活动物体交互
+				Object o(x, y, p.w, p.h, objectCate::playerTank);
+				if (!enemys.empty()) 
+				{
+					for (auto k = enemys.begin(); k != enemys.end(); k++)
+					if (collision(&o, &(*k)))
+							return 0;
+				}
+				//构建移动规则(与地图交互)
+				int i = x / TANK_W;
+				int j = y / TANK_H;
+				//
+				//if (!collision(&p, &mapDate.data[i][j]))
+				{
+					switch (mapDate.data[i][j].cate)
+					{
+					case objectCate::wall:
+					case objectCate::enemyBase:
+					case objectCate::strongWall:
+						//do nothing
+						p.dir = con;
+						break;
+					case objectCate::space:
+					case objectCate::playerBase:
+						p.x = x;
+						p.y = y;
+						p.dir = con;
+					default:
+
+						break;
+					};
+					return 1;
+				}
+			}
+
 		}
-		if (!collision(&p, &mapDate.data[x / TANK_W][x / TANK_H]))
-		{
-			p.x = x; p.y = y;
-		}
-		p.dir = con;
-		return 1;
+		
+		return 0;
 	}
 
-	return 0;
-}
 bool GameControl::CreatEnemy(enemyTank e)
 {
 

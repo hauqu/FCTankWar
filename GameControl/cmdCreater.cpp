@@ -17,7 +17,17 @@ deque<cmd> cmdCreater::out(int ncmd)
 
 deque<cmd> cmdCreater::out(Aicmd c)
 {
-	return deque<cmd>();
+	deque<cmd>temp;
+	if (c == Aicmd::stay)
+	{
+		temp.push_back(cmd::Down);
+		for (int i = 0; i < 100; i++)
+		{
+			temp.push_back(cmd::Stop);
+		}
+	}
+	return temp;
+
 }
 
 inline cmd cmdCreater::int_to_cmd(int c)

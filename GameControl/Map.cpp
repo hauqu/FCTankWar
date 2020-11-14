@@ -75,7 +75,7 @@ bool Map::loadMap(unsigned int level)
 	{
 		data[i].resize(MaxH);
 	}
-
+	/*
 	for (int i = 0; i < data.size(); i++)
 	{
 		for (int j = 0; j < data[i].size(); j++)
@@ -92,15 +92,40 @@ bool Map::loadMap(unsigned int level)
 				enemybases.push_back(Object(i,j,0,0,objectCate::enemyBase));
 			if (data[i][j].cate == objectCate::playerBase)
 				playerbase = Object(i, j, 0, 0, objectCate::playerBase);
+			
+
+			//map 类只能决定自己的类型
+			//不能决定自己的大小，坐标 id 和是否可用
+			//具体的需要在GameControl实现
+			//详情见 其 initMap()方法
+		}
+	}
+	*/
+	for (int i = 0; i < MaxH; i++)
+	{
+		for(int j=0;j<MaxW;j++)
+		{
+			char c = file.get();
+			if (c == '\n')
+			{
+				j--;
+				continue;
+			}
+			data[j][i].cate = c_to_objectCate(c);
+			if (data[j][i].cate == objectCate::enemyBase)
+				enemybases.push_back(Object(j, i, 0, 0, objectCate::enemyBase));
+			if (data[j][i].cate == objectCate::playerBase)
+				playerbase = Object(j, i, 0, 0, objectCate::playerBase);
 			/*
 			map 类只能决定自己的类型
 			不能决定自己的大小，坐标 id 和是否可用
 			具体的需要在GameControl实现
 			详情见 其 initMap()方法
 			*/
-			
 		}
 	}
+
+
 	return true;
 }
 

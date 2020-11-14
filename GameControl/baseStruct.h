@@ -31,5 +31,6 @@ const int baseCmdCateNumber = 8;//基础指令的种类个数
 enum class Aicmd
 {
 	random,//随机
+	stay,//出基地后静止
 };//复杂指令，如寻找，围堵，可被拆分为基础指令
 //具体的指令由指令生成器生成
