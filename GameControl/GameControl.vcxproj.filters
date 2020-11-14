@@ -19,6 +19,9 @@
     <Filter Include="头文件\生成器">
       <UniqueIdentifier>{5ff8d411-1d51-42b6-9554-f9be7ab7cb0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\图片资源">
+      <UniqueIdentifier>{5b47ac20-a562-47f9-b405-75a043f362f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -92,6 +95,24 @@
   <ItemGroup>
     <Image Include="确定子弹与地图元素.png">
       <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="p_enemy.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
+    <Image Include="p_enemybullet.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
+    <Image Include="p_player.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
+    <Image Include="p_playerbullet.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
+    <Image Include="p_strongwall.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
+    <Image Include="p_wall.jpg">
+      <Filter>资源文件\图片资源</Filter>
     </Image>
   </ItemGroup>
 </Project>

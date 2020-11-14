@@ -25,7 +25,7 @@ bullet::bullet(Object* o, cmd d, int a,int id)
 	{
 	case cmd::Up:
 		this->x = o->x;
-		this->y = o->y + o->h;
+		this->y = o->y - o->h;
 		break;
 	case cmd::Right:
 		this->y = o->y;
@@ -33,7 +33,7 @@ bullet::bullet(Object* o, cmd d, int a,int id)
 		break;
 	case cmd::Down:
 		this->x = o->x;
-		this->y = o->y - o->h;
+		this->y = o->y + o->h;
 		break;
 	case cmd::Left:
 	

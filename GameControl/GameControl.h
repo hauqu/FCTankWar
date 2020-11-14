@@ -37,7 +37,8 @@ public:
 	list<enemyTank>enemys;//所有敌人
 	list<bullet>enemybullets;//所有敌人子弹
 
-	list<bullet>playerbullets;//所有玩家子弹
+	//list<bullet>playerbullets;//所有玩家子弹
+	bullet* playerbullet;//玩家子弹
 	playerTank p;//玩家，1
 	bool live;//场上是否有玩家
 	int MaxEnemys;//最大敌人数量 低于则生成
@@ -45,6 +46,8 @@ public:
 	GameControl();//所有都是默认的，无参
 	~GameControl()
 	{
+		if(playerbullet!=nullptr)
+		delete playerbullet;
 	}
 	
 public:

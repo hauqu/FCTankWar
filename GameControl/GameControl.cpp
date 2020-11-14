@@ -10,7 +10,7 @@ GameControl::GameControl():
 	p(playerTank()),
 	live(false)
 {
-	
+	playerbullet = nullptr;
 }
 int GameControl::start(int level)
 {
@@ -59,14 +59,61 @@ int GameControl::run()
 {
 
 	//p  b move
+	/*
 	if(!playerbullets.empty())
 	for (list<bullet>::iterator i = playerbullets.begin(); i != playerbullets.end(); i++)
 		bullet_move(*i);
+	*/
+	if(playerbullet!=nullptr)
+	{
+		bullet_move(*playerbullet);
+
+	}
+
 	//e b move
 	if(!enemybullets.empty())
 	for (auto i = enemybullets.begin(); i != enemybullets.end(); i++)
 		bullet_move(*i);
 	//检测b  碰撞
+	if (playerbullet != nullptr)
+	{
+		//子弹与敌人的碰撞
+		for (auto j = enemys.begin(); j != enemys.end(); j++)
+		{
+			if (collision(playerbullet, &(*j)))
+			{
+				//处理玩家子弹与敌人
+				playerbullet->available = false;//子弹失效
+				(*j).Hp -= playerbullet->attack;//减少血量
+				if ((*j).Hp <= 0)//死亡
+					(*j).available = false;
+			}
+		}
+		if (playerbullet->available == true)
+		{
+			int w = playerbullet->x / TANK_W;
+			int h = playerbullet->y / TANK_H;
+			if (collision(playerbullet, &mapDate.data[w][h]))
+			{
+				switch (mapDate.data[w][h].cate)
+				{
+				case objectCate::wall:
+					mapDate.data[w][h].cate = objectCate::space;
+					playerbullet->available = false;
+					break;
+				case objectCate::enemyBase:
+				case objectCate::playerBase:
+				case objectCate::strongWall:
+					playerbullet->available = false;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+	
+	/*
 	if (!playerbullets.empty())
 	for (list<bullet>::iterator i = playerbullets.begin(); i != playerbullets.end(); i++)
 	{
@@ -91,7 +138,7 @@ int GameControl::run()
 				(*i).available = false;
 			}
 		}
-	}
+	}*/
 	if (!enemybullets.empty())
 	for (auto i = enemybullets.begin(); i != enemybullets.end(); i++)
 	{
@@ -176,14 +223,17 @@ bool GameControl::collision(Object* o1, Object* o2)
 	switch (b.dir)
 	{
 	case cmd::Up:
-		b.y += BULLET_STEP;
+		b.y -= BULLET_STEP;
 		break;
 	case cmd::Down:
-		b.y -= BULLET_STEP;
+		b.y += BULLET_STEP; 
+		break;
 	case cmd::Left:
 		b.x -= BULLET_STEP;
+		break;
 	case cmd::Right:
 		b.x += BULLET_STEP;
+		break;
 	default:
 		break;
 	}
@@ -215,13 +265,13 @@ int GameControl::act_enemy(enemyTank& e)
 		{
 		
 		case cmd::Up:
-			y += TANK_STEP;
+			y -= TANK_STEP;
 			break;
 		case cmd::Right:
 			x += TANK_STEP;
 			break;
 		case cmd::Down:
-			y -= TANK_STEP;
+			y += TANK_STEP;
 			break;
 		case cmd::Left:
 			x -= TANK_STEP;
@@ -268,7 +318,7 @@ void GameControl::clearDieObject()
 {
 	//迭代器删除之后无效，需要删除前保存
 
-
+	/*
 	auto i = playerbullets.begin();
 	while (i != playerbullets.end())
 	{
@@ -276,6 +326,11 @@ void GameControl::clearDieObject()
 			playerbullets.erase(i++);//删除当前位置并后移
 		else i++;
 	}//玩家子弹
+	*/
+	if(playerbullet!=nullptr)
+	if (playerbullet->available == false)
+		playerbullet =nullptr;
+
 	auto it = enemybullets.begin();
 	while (it != enemybullets.end())
 	{
@@ -303,10 +358,12 @@ int GameControl::getcmd(char c)
 	}else 
 	if (con == cmd::Attack)
 	{
-
-		bullet temp(&p, p.dir, p.attack, idMaker.out());
-		playerbullets.push_back(temp);
-		return 1;
+		if (playerbullet == nullptr) {
+			bullet temp(&p, p.dir, p.attack, idMaker.out());
+			//playerbullets.push_back(temp);
+			playerbullet = new bullet(temp);
+			return 1;
+		}
 	}
 	else if (con == cmd::Explosion)
 	{
@@ -321,13 +378,13 @@ int GameControl::getcmd(char c)
 		{
 
 		case cmd::Up:
-			y += TANK_STEP;
+			y -= TANK_STEP;
 			break;
 		case cmd::Right:
 			x += TANK_STEP;
 			break;
 		case cmd::Down:
-			y -= TANK_STEP;
+			y += TANK_STEP;
 			break;
 		case cmd::Left:
 			x -= TANK_STEP;

@@ -1,4 +1,18 @@
+BUG:
 playerbullets 不可用，使用即报错
 enemybullets 正常
 
-物体碰撞判定 有问题
+调试：
+将playerbullets list 改为 bullet * playerbullet 单个模式
+错误原因 Run 方法中进行 玩家子弹对敌人的碰撞 
+写错了迭代器变量 将敌人迭代器递增写成 子弹递增 ，
+故迭代器不存在，报错（j++写成 i++）
+
+BUG:
+子弹左移 总是停止不动
+
+调试：bullet_move 方法 左移右移 忘记加break 
+
+BUG:玩家坦克 初始坐标不与地图对齐
+
+调试：坐标系问题 将坐标系改为 屏幕坐标系

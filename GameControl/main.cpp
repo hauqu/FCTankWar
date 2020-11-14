@@ -2,13 +2,28 @@
 #include<conio.h>
 #include<graphics.h>
 #include<Windows.h>
+
+//图片资源
+IMAGE p_wall;
+IMAGE p_strongwall;
+IMAGE p_player;
+IMAGE p_playerbullet;
+IMAGE p_enemy;
+IMAGE p_enemybullet;
+
+
 GameControl mainGame;
+
+
+
+void loadPicture();
 void Draw(GameControl& gc);
 int main()
 {
 	initgraph(640, 480);
-	setaspectratio(1, -1);
-	setorigin(120, 400);
+	loadPicture();
+	//setaspectratio(1, -1);
+	
 	mainGame.start(1);
 	while (true)
 	{
@@ -29,73 +44,101 @@ int main()
 
 void Draw(GameControl& gc)
 {
-	
-	//绘制地图元素
-	setfillcolor(RGB(128, 128, 64));
+
 	for (int i = 0; i < gc.mapDate.data.size(); i++)
 	{
 		for (int j = 0; j < gc.mapDate.data[i].size(); j++)
 		{
 			
+
 			switch(gc.mapDate.data[i][j].cate)
 			{
-			case objectCate::space :
-				//do nothing
-				
-				break;
 			case objectCate::wall:
-				setfillcolor(RGB(128, 128, 64));
-				fillrectangle(
-					gc.mapDate.data[i][j].x - gc.mapDate.data[i][j].w / 2,
-					gc.mapDate.data[i][j].y + gc.mapDate.data[i][j].h / 2,
-					gc.mapDate.data[i][j].x + gc.mapDate.data[i][j].w / 2,
-					gc.mapDate.data[i][j].y - gc.mapDate.data[i][j].h / 2
-				);
+				putimage(gc.mapDate.data[i][j].x
+					- gc.mapDate.data[i][j].w / 2,
+					gc.mapDate.data[i][j].y
+					- gc.mapDate.data[i][j].h / 2,
+					&p_wall
+				);break;
+			case objectCate::strongWall:
+				putimage(gc.mapDate.data[i][j].x
+					- gc.mapDate.data[i][j].w / 2,
+					gc.mapDate.data[i][j].y
+					- gc.mapDate.data[i][j].h / 2,
+					&p_strongwall
+				); break;
+			case objectCate::space:
+				clearrectangle(gc.mapDate.data[i][j].x
+					- gc.mapDate.data[i][j].w / 2,
+					gc.mapDate.data[i][j].y
+					+ gc.mapDate.data[i][j].h / 2,
+					gc.mapDate.data[i][j].x
+					+ gc.mapDate.data[i][j].w / 2,
+					gc.mapDate.data[i][j].y
+					- gc.mapDate.data[i][j].h / 2);
+				break;
 			case objectCate::enemyBase:
 			case objectCate::playerBase:
-				setfillcolor(BLUE);
-				fillrectangle(
-					gc.mapDate.data[i][j].x - gc.mapDate.data[i][j].w / 2,
-					gc.mapDate.data[i][j].y + gc.mapDate.data[i][j].h / 2,
-					gc.mapDate.data[i][j].x + gc.mapDate.data[i][j].w / 2,
-					gc.mapDate.data[i][j].y - gc.mapDate.data[i][j].h / 2
-				);
+				rectangle(gc.mapDate.data[i][j].x
+					- gc.mapDate.data[i][j].w / 2,
+					gc.mapDate.data[i][j].y
+					+ gc.mapDate.data[i][j].h / 2,
+					gc.mapDate.data[i][j].x
+					+ gc.mapDate.data[i][j].w / 2,
+					gc.mapDate.data[i][j].y
+					- gc.mapDate.data[i][j].h / 2);
 				break;
-			case objectCate::strongWall:
-				setfillcolor(RGB(128, 128, 64));
-				fillrectangle(
-					gc.mapDate.data[i][j].x - gc.mapDate.data[i][j].w / 2,
-					gc.mapDate.data[i][j].y + gc.mapDate.data[i][j].h / 2,
-					gc.mapDate.data[i][j].x + gc.mapDate.data[i][j].w / 2,
-					gc.mapDate.data[i][j].y - gc.mapDate.data[i][j].h / 2
-				);
-				break;
+				
 			}
+
+			circle(gc.mapDate.data[i][j].x,
+				gc.mapDate.data[i][j].y, 16);
 		}
 	}
 
-	for (auto i = gc.enemys.begin(); i != gc.enemys.end(); i++)
+	if(gc.playerbullet!=nullptr)
 	{
-		setfillcolor(YELLOW);
-		fillrectangle((*i).x - (*i).w / 2, (*i).y + (*i).h / 2,
-			(*i).x + (*i).w / 2, (*i).y - (*i).h / 2);
+		putimage(gc.playerbullet->x - gc.playerbullet->w / 2,
+			gc.playerbullet->y - gc.playerbullet->h / 2,
+			&p_playerbullet
+		);
+		circle(gc.playerbullet->x, gc.playerbullet->y, 8);
 	}
-	for (auto i = gc.enemybullets.begin(); i !=gc.enemybullets.end(); i++)
+	putimage(gc.p.x - gc.p.w / 2,
+		gc.p.y - gc.p.h / 2,
+		&p_player
+	); circle(gc.p.x, gc.p.y, 16);
+	if (!gc.enemybullets.empty())
 	{
-		setfillcolor(YELLOW);
-		fillrectangle((*i).x - (*i).w / 2, (*i).y + (*i).h / 2,
-			(*i).x + (*i).w / 2, (*i).y - (*i).h / 2);
+		for (auto i = gc.enemybullets.begin(); i != gc.enemybullets.end(); i++)
+		{
+			putimage((*i).x - (*i).w / 2,
+				(*i).y + (*i).h / 2,
+				&p_enemybullet);
+		}
 	}
-	for (auto i = gc.playerbullets.begin(); i != gc.playerbullets.end(); i++)
+	if (!gc.enemys.empty())
 	{
-		setfillcolor(RED);
-		fillrectangle((*i).x - (*i).w / 2, (*i).y + (*i).h / 2,
-			(*i).x + (*i).w / 2, (*i).y - (*i).h / 2);
+		for (auto i = gc.enemys.begin(); i != gc.enemys.end(); i++)
+		{
+			putimage((*i).x - (*i).w / 2,
+				(*i).y + (*i).h / 2,
+				&p_enemy);
+		}
 	}
-	setfillcolor(RED);
-	fillrectangle(gc.p.x - gc.p.w / 2, gc.p.y + gc.p.h / 2,
-		gc.p.x + gc.p.w / 2, gc.p.y - gc.p.h / 2);
-	circle(gc.p.x - gc.p.w / 2, gc.p.y + gc.p.h / 2, 10);
-	circle(gc.p.x + gc.p.w / 2, gc.p.y - gc.p.h / 2, 20);
+
+	
+}
+
+
+
+void loadPicture()
+{
+	loadimage(&p_wall, "p_wall.jpg", 32, 32);
+	loadimage(&p_strongwall, "p_strongwall.jpg", 32, 32);
+	loadimage(&p_player, "p_player.jpg", 32, 32);
+	loadimage(&p_enemy, "p_enemy.jpg", 32, 32);
+	loadimage(&p_enemybullet, "p_enemybullet.jpg", 16, 16);
+	loadimage(&p_playerbullet, "p_playerbullet.jpg", 16, 16);
 
 }

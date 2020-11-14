@@ -150,6 +150,12 @@
     <Text Include="调试日志.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="p_enemy.jpg" />
+    <Image Include="p_enemybullet.jpg" />
+    <Image Include="p_player.jpg" />
+    <Image Include="p_playerbullet.jpg" />
+    <Image Include="p_strongwall.jpg" />
+    <Image Include="p_wall.jpg" />
     <Image Include="确定子弹与地图元素.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
