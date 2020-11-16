@@ -114,5 +114,20 @@
     <Image Include="p_wall.jpg">
       <Filter>资源文件\图片资源</Filter>
     </Image>
+    <Image Include="p_enemy_w.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
+    <Image Include="p_enemy_s.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
+    <Image Include="p_enemy_d.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
+    <Image Include="p_enemy_a.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
+    <Image Include="playerbase.jpg">
+      <Filter>资源文件\图片资源</Filter>
+    </Image>
   </ItemGroup>
 </Project>

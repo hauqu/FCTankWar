@@ -10,6 +10,7 @@ deque<cmd> cmdCreater::out(int ncmd)
 	for (int i = 0; i < ncmd; i++)
 	{
 		cs.push_back(int_to_cmd(rand() % baseCmdCateNumber));
+		cs.push_back(cmd::NA);
 	}
 	return cs;
 	

@@ -54,14 +54,14 @@ public:
 	int run();//每帧游戏需要计算改变的量
 	int start(int level);//控制游戏开始
 	int getcmd(char c);//接受外部字符参数以控制p（玩家）
-	
+	void clearDieObject();//清理已经失效的物体
 private:
 	void initMap();//完善地图信息，包括分配id 大小
 	void bullet_move(bullet &b);//强制移动，不检测碰撞
 	int act_enemy(enemyTank& e);//执行 自身的cmd
 	bool collision(Object* o1, Object* o2);//矩形碰撞检测
 	cmd c_to_cmd(char c);//将字符转换为cmd
-	void clearDieObject();//清理已经失效的物体
+	
 	bool CreatEnemy(enemyTank e);//在基地中生成一个敌人
-
+	
 };

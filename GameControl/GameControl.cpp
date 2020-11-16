@@ -41,13 +41,13 @@ int GameControl::start(int level)
 	{
 		enemyTank e;
 		e.available = true;
-		e.x = (*i).x;
+		e.x = (*i).x+TANK_W;
 		e.y = (*i).y;
 		e.w = TANK_W;
 		e.h = TANK_H;
 		e.level = 1;
 		e.id = idMaker.out();
-		e.action = cmdMaker.out(Aicmd::stay);
+		e.action = cmdMaker.out(10);
 		enemys.push_back(e);
 		
 	}
@@ -57,20 +57,11 @@ int GameControl::start(int level)
 int GameControl::run()
 {
 
-	//p  b move
-	/*
-	if(!playerbullets.empty())
-	for (list<bullet>::iterator i = playerbullets.begin(); i != playerbullets.end(); i++)
-		bullet_move(*i);
-	*/
-	
-
-
-	
-	//检测b  碰撞
+	/*******************玩家子弹移动**********************/
 	if (playerbullet != nullptr)
 	{
-		//子弹与敌人的碰撞
+		if (playerbullet->available != false)
+			bullet_move(*playerbullet);
 		for (auto j = enemys.begin(); j != enemys.end(); j++)
 		{
 			if (collision(playerbullet, &(*j)))
@@ -81,11 +72,29 @@ int GameControl::run()
 				if ((*j).Hp <= 0)//死亡
 					(*j).available = false;
 			}
-		}
+		}//子弹与地图元素碰撞
 		if (playerbullet->available == true)
 		{
-			int w = playerbullet->x / TANK_W;
-			int h = playerbullet->y / TANK_H;
+			int w = playerbullet->x / TANK_W;//左，上会少一格
+			int h = playerbullet->y / TANK_H;//需要补偿
+			switch (playerbullet->dir)
+			{
+				//由于物体的结构是中心点式，需要进行补偿
+			case cmd::Up:
+				
+				break;
+			case cmd::Down:
+				h++;
+				break;
+			case cmd::Right:
+				w++;
+				break;
+			case cmd::Left:
+				
+				break;
+			default:
+				break;
+			}
 			if (collision(playerbullet, &mapDate.data[w][h]))
 			{
 				switch (mapDate.data[w][h].cate)
@@ -103,83 +112,95 @@ int GameControl::run()
 					break;
 				}
 			}
+
 		}
-	}
-	
-	/*
-	if (!playerbullets.empty())
-	for (list<bullet>::iterator i = playerbullets.begin(); i != playerbullets.end(); i++)
-	{
-		for (auto j = enemys.begin(); j != enemys.end(); i++)
-		{
-			if (collision(&(*i), &(*j)))
-			{
-				//处理玩家子弹与敌人
-				(*i).available = false;//子弹失效
-				(*j).Hp -= (*i).attack;//减少血量
-				if ((*j).Hp <= 0)//死亡
-					(*j).available = false;
-			}
-		}
-		if((*i).available==true)
-		{
-			int w = (*i).x / TANK_W;
-			int h = (*i).y / TANK_H;
-			if (collision( &(*i),&mapDate.data[w][h]))
-			{
-				mapDate.data[w][h].cate = objectCate::space;
-				(*i).available = false;
-			}
-		}
-	}*/
-	if (!enemybullets.empty())
-	for (auto i = enemybullets.begin(); i != enemybullets.end(); i++)
-	{
-		if(collision(&(*i),&p))
-		{
-			(*i).available = false;
-			p.Hp -= (*i).attack;
-			if (p.Hp<=0)
-			{
-				p.available = false;
-			}
-		}
-		if ((*i).available==true)
-		{
-			int w = (*i).x / TANK_W;
-			int h = (*i).y / TANK_H;
-			if (collision(&(*i), &mapDate.data[w][h]))
-			{
-				mapDate.data[w][h].cate = objectCate::space;
-				(*i).available = false;
-			}
-		}
-	}
-	if(!enemys.empty())
-	for (auto i = enemys.begin(); i != enemys.end(); i++)
-	{
-		if ((*i).action.empty())
-		{
-			(*i).action = cmdMaker.out(8);
-		}
-		else
-		{
-			act_enemy(*i);
-		}
-	}
-	if (playerbullet != nullptr)
-	{
-		if(playerbullet->available!=false)
-		bullet_move(*playerbullet);
 
 	}
-	clearDieObject();
-	//e b move
+	/*******************敌方子弹移动***********************/
 	if (!enemybullets.empty())
+	{
 		for (auto i = enemybullets.begin(); i != enemybullets.end(); i++)
-			if((*i).available!=false)
-			bullet_move(*i);
+		{
+			if ((*i).available != false) {
+				bullet_move(*i);
+				//检测碰撞玩家
+				if (collision(&(*i), &p))
+				{
+					(*i).available = false;
+					p.Hp -= (*i).attack;
+					if (p.Hp <= 0)
+					{
+						p.available = false;
+					}
+				}
+				//检测碰撞地图
+				if ((*i).available == true)
+				{
+					int w = (*i).x / TANK_W;
+					int h = (*i).y / TANK_H;
+					switch ((*i).dir)
+					{
+						//由于物体的结构是中心点式，需要进行补偿
+					case cmd::Up:
+
+						break;
+					case cmd::Down:
+						h++;
+						break;
+					case cmd::Right:
+						w++;
+						break;
+					case cmd::Left:
+
+						break;
+					default:
+						break;
+					}
+					if (collision(&(*i), &mapDate.data[w][h]))
+					{
+						switch (mapDate.data[w][h].cate)
+						{
+						case objectCate::wall:
+							mapDate.data[w][h].cate = objectCate::space;
+							(*i).available = false;
+							break;
+						case objectCate::enemyBase:
+						case objectCate::playerBase:
+						case objectCate::strongWall:
+							(*i).available = false;
+							break;
+						default:
+							break;
+						}
+					}
+
+				}
+			}
+		}
+	}
+	/****************敌人行动*******************************/
+	if (!enemys.empty()) 
+	{
+		for (auto i = enemys.begin(); i != enemys.end(); i++)
+		{
+			if ((*i).action.empty())
+			{
+				(*i).action = cmdMaker.out(20);
+			}
+			else
+			{
+				act_enemy(*i);
+			}
+		}
+	}
+	/********************************************************/
+
+	if(p.available==true)
 	return 1;
+	else
+	{
+		return 0;
+	}
 }
 
 void GameControl::initMap()
@@ -249,8 +270,8 @@ bool GameControl::collision(Object* o1, Object* o2)
 	 }
 	 if (con == cmd::Attack)
 	 {
-		 //bullet temp(&e,e.dir,e.attack,idMaker.out());
-		 //enemybullets.push_back(temp);
+		 bullet temp(&e,e.dir,e.attack,idMaker.out());
+		 enemybullets.push_back(temp);
 		 return 1;
 	 }
 	 else if (con == cmd::Explosion)
@@ -264,7 +285,7 @@ bool GameControl::collision(Object* o1, Object* o2)
 		 if(con!=e.dir)
 		 {
 			 e.dir = con;
-			 return 1;
+			 //return 1;
 		 }
 		 int x = e.x; int y = e.y;
 		 switch (con)
@@ -287,27 +308,25 @@ bool GameControl::collision(Object* o1, Object* o2)
 		 int i = x / TANK_W;
 		 int j = y / TANK_H;
 		 //
-		 if (collision(&e, &mapDate.data[i][j]))
-		 {
-			 switch (mapDate.data[i][j].cate)
-			 {
-			 case objectCate::wall:
-			 case objectCate::playerBase:
-			 case objectCate::strongWall:
+		 
+		 switch (mapDate.data[i][j].cate)
+		{
+		 case objectCate::wall:
+		 case objectCate::playerBase:
+		 case objectCate::strongWall:
 				 //do nothing
 				 e.dir = con;
 				 break;
-			 case objectCate::space:
-			 case objectCate::enemyBase:
+		 case objectCate::space:
+		 case objectCate::enemyBase:
 				 e.x = x;
 				 e.y = y;
 				 e.dir = con;
-			 default:
+		 default:
 				 break;
 			 };
 
 			 return 1;
-		 }
 
 		 return 0;
 	 }
@@ -487,5 +506,7 @@ bool GameControl::CreatEnemy(enemyTank e)
 	return false;//
 
 }
+
+
 
 

@@ -150,8 +150,13 @@
     <Text Include="调试日志.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="playerbase.jpg" />
     <Image Include="p_enemy.jpg" />
     <Image Include="p_enemybullet.jpg" />
+    <Image Include="p_enemy_a.jpg" />
+    <Image Include="p_enemy_d.jpg" />
+    <Image Include="p_enemy_s.jpg" />
+    <Image Include="p_enemy_w.jpg" />
     <Image Include="p_player.jpg" />
     <Image Include="p_playerbullet.jpg" />
     <Image Include="p_strongwall.jpg" />
