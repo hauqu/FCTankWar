@@ -64,8 +64,8 @@ private:
 	bool CreatEnemy(enemyTank e);//在基地中生成一个敌人
 
 
-private:
-	Graph& creatGraph();
+
+	
 	
 	
 };
