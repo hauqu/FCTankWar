@@ -61,7 +61,11 @@ private:
 	int act_enemy(enemyTank& e);//执行 自身的cmd
 	bool collision(Object* o1, Object* o2);//矩形碰撞检测
 	cmd c_to_cmd(char c);//将字符转换为cmd
-	
 	bool CreatEnemy(enemyTank e);//在基地中生成一个敌人
+
+
+private:
+	Graph& creatGraph();
+	
 	
 };

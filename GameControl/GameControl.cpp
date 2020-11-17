@@ -506,7 +506,48 @@ bool GameControl::CreatEnemy(enemyTank e)
 	return false;//
 
 }
+Graph& GameControl::creatGraph()
+{
+	Graph temp(mapDate.MaxW, mapDate.MaxH, TANK_W);
+	//建立全通图
+	
+	//地图元素生成图
+	for (int i = 0; i < mapDate.data.size(); i++)
+	{
+		for (int j = 0; j < mapDate.data[i].size(); j++)
+		{
+			temp.G[i][j].cate = mapDate.data[i][j].cate;
+			switch (mapDate.data[i][j].cate)
+			{
+			case objectCate::playerBase:
+			case objectCate::wall:
+			case objectCate::strongWall:
+			case objectCate::water:
+				//不可通过元素
+				if (j > 0) { temp.G[i][j].up = nullptr; }
+				if (j < mapDate.MaxH - 1) { temp.G[i][j].down = nullptr; }
+				if (i > 0) { temp.G[i][j].left = nullptr; }
+				if (i < mapDate.MaxW - 1) { temp.G[i][j].right = nullptr; }
+				//断开自身连接外面
+				if(j>1) temp.G[i][j-1].down = nullptr;
+				if(j<mapDate.MaxH-2) temp.G[i][j+1].up = nullptr;
+				if(i>1) temp.G[i - 1][j].right = nullptr;
+				if(i<mapDate.MaxW-2) temp.G[i + 1][j].left = nullptr;
+				//断开外界与自身的连接
+				break;
+			case objectCate::space:
+			case objectCate::enemyBase:
+				//do nothing
 
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+
+}
 
 
 

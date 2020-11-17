@@ -4,6 +4,7 @@ cmdCreater::cmdCreater()
 {
 	srand(time(nullptr));
 }
+
 deque<cmd> cmdCreater::out(int ncmd)
 {
 	deque<cmd>cs;

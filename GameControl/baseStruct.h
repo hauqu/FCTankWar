@@ -6,13 +6,9 @@
 #include<list>//gameControl 管理 tank相关对象
 #include<fstream>//map类文件处理
 #include<deque>//存储指令序列
-#include<ctime>
 
-//声明一些常量(不一定)
+using namespace std;
 
-//玩家最多能发射的炮弹，当达到后无法执行attack
-
-//上述常量主要用于绘图参数
 enum class objectCate//物体的几种类型
 {
 	playerTank=0, enemyTank, Bullet,
@@ -32,5 +28,58 @@ enum class Aicmd
 {
 	random,//随机
 	stay,//出基地后静止
+	gotoxy,//前往x，y
+	BFS,//广度优先搜索
+	DFS,//深度优先搜索
+
 };//复杂指令，如寻找，围堵，可被拆分为基础指令
 //具体的指令由指令生成器生成
+
+
+struct node
+{
+	int x;
+	int y;
+	objectCate cate;
+	struct node* up;
+	struct node* right;
+	struct node* down;
+	struct node* left;
+
+};
+//无权 无向 定图
+
+class Graph {
+public:
+	vector<vector<node>>G;
+	const int K;//k 用于生成对应坐标
+	Graph(int w, int h, int mapsize) :K(mapsize) //全通图
+	{
+
+		G.resize(w);
+		for (int i = 0; i < w; i++)
+		{
+			G[i].resize(h);
+		}
+		for (int i = 0; i < G.size(); i++)
+		{
+			for (int j = 0; j < G[i].size(); j++)
+			{
+				G[i][j] = { i * mapsize,j * mapsize,
+					objectCate::space,
+					nullptr,nullptr,nullptr,nullptr };
+				if (j > 0) { G[i][j].up = &G[i][j - 1]; }
+				if (j < h - 1) { G[i][j].down = &G[i][j + 1]; }
+				if (i > 0) { G[i][j].left = &G[i - 1][j]; }
+				if (i < w - 1) { G[i][j].right = &G[i + 1][j]; }
+			}
+		}
+
+
+	}
+	Graph():K(0)
+	{
+		
+	}
+
+};

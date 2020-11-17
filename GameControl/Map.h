@@ -24,10 +24,11 @@ public:
 private:
 	objectCate c_to_objectCate(char c);
 	
-private:
+public:
 	int MaxW;
 	int MaxH;
 	//×î´ó¿í¶È
+private:
 	const string mapName;
 	
 };
