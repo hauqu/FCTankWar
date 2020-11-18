@@ -1,5 +1,5 @@
 #include "bullet.h"
-
+const int bullletsize = 16;
 bullet::bullet()
 {
 	this->x = 0;
@@ -20,7 +20,7 @@ bullet::bullet(Object* o, cmd d, int a,int id)
 	TankId = o->id;
 	available = true;
 	this->id = id;
-	w = 16; h = 16;//应当使用变量
+	w = bullletsize; h = bullletsize;//应当使用变量
 	switch (d)
 	{
 	case cmd::Up:

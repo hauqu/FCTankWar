@@ -146,7 +146,7 @@ inline objectCate Map::c_to_objectCate(char c)
 	case '5':
 		return objectCate::falg;
 	case '6':
-		return objectCate::galss;
+		return objectCate::grass;
 	case '7':
 		return objectCate::playerBase;
 	case '8':

@@ -8,18 +8,26 @@ GameControl::GameControl():
 	idMaker(IdCreater()),
 	cmdMaker(cmdCreater()),
 	p(playerTank()),
-	live(false)
+	live(false),
+	level(0)
 {
+	p.Hp = 2;
 	playerbullet = nullptr;
 }
 int GameControl::start(int level)
 {
 	mapDate.loadMap(level);
+	this->level = level;
+	//加载 level 关卡地图
 	initMap();
+	//初始化地图
+	cmdMaker.g = creatGraph();
+	//将地图抽象的图 传递给 cmdmaker
 	mapDate.playerbase.w = TANK_W;
 	mapDate.playerbase.h = TANK_H;
 	mapDate.playerbase.x *= TANK_W;
 	mapDate.playerbase.y *= TANK_H;
+	//初始化地图信息
 	for (auto i = mapDate.enemybases.begin();
 		i != mapDate.enemybases.end();  i++)
 	{
@@ -27,15 +35,17 @@ int GameControl::start(int level)
 		(*i).h = TANK_H;
 		(*i).x *= TANK_W;
 		(*i).y *= TANK_H;
-	}
-	p.available = true;
+	}//初始化地图
 
+	p.available = true;
 	p.x = mapDate.playerbase.x;
 	p.y = mapDate.playerbase.y-TANK_H;
 	p.w = TANK_W;
 	p.h = TANK_H;
 	p.id = idMaker.out();
 	live = true;
+	//初始化玩家
+	/*
 	for (auto i = mapDate.enemybases.begin();
 		i != mapDate.enemybases.end();  i++)
 	{
@@ -50,13 +60,14 @@ int GameControl::start(int level)
 		e.action = cmdMaker.out(10);
 		enemys.push_back(e);
 		
-	}
-	
+	}//初始化敌人
+	*/
 	return 1;
 }
 int GameControl::run()
 {
-
+	
+	CreatEnemy();
 	/*******************玩家子弹移动**********************/
 	if (playerbullet != nullptr)
 	{
@@ -195,12 +206,9 @@ int GameControl::run()
 	}
 	/********************************************************/
 
-	if(p.available==true)
-	return 1;
-	else
-	{
-		return 0;
-	}
+	if (p.available == true)
+		return 1;
+	else return 0;
 }
 
 void GameControl::initMap()
@@ -314,11 +322,13 @@ bool GameControl::collision(Object* o1, Object* o2)
 		 case objectCate::wall:
 		 case objectCate::playerBase:
 		 case objectCate::strongWall:
+		 case objectCate::water:
 				 //do nothing
 				 e.dir = con;
 				 break;
 		 case objectCate::space:
 		 case objectCate::enemyBase:
+		 case objectCate::grass:
 				 e.x = x;
 				 e.y = y;
 				 e.dir = con;
@@ -457,11 +467,13 @@ int GameControl::getcmd(char c)
 					case objectCate::wall:
 					case objectCate::enemyBase:
 					case objectCate::strongWall:
+					case objectCate::water:
 						//do nothing
 						p.dir = con;
 						break;
 					case objectCate::space:
 					case objectCate::playerBase:
+					case objectCate::grass:
 						p.x = x;
 						p.y = y;
 						p.dir = con;
@@ -480,30 +492,71 @@ int GameControl::getcmd(char c)
 
 bool GameControl::CreatEnemy(enemyTank e)
 {
-
 	//生成要求，1.当前坦克数量小于最大数
 	//2.敌人基地没有其他坦克
-	for (auto i = mapDate.enemybases.begin(); i != mapDate.enemybases.end(); i++)
-	{
-		bool falg = true;//该基地是否可用
-		for (auto j = enemys.begin(); j != enemys.end(); j++)
-		{
-				if ((*i).available)
-				if (collision(&(*i), &(*j)))
-					falg = false;//有坦克，不可用
-		}
-		if (falg)//生成一个就结束
-		{
-			e.x = (*i).x;
-			e.y = (*i).y;
-			e.id = idMaker.out();
-			e.available = true;
-			enemys.push_back(e);
-			return true;
 
+	if(this->enemys.size()>=MaxEnemys)
+	{
+		for (auto i = mapDate.enemybases.begin(); i != mapDate.enemybases.end(); i++)
+		{
+			bool falg = true;//该基地是否可用
+			for (auto j = enemys.begin(); j != enemys.end(); j++)
+			{
+				if ((*i).available)
+					if (collision(&(*i), &(*j)))
+						falg = false;//有坦克，不可用
+			}
+			if (falg)//生成一个就结束
+			{
+				e.x = (*i).x;
+				e.y = (*i).y;
+				e.w = TANK_W;
+				e.h = TANK_H;
+				e.level = 1;
+				e.id = idMaker.out();
+				e.available = true;
+				enemys.push_back(e);
+				return true;
+
+			}
 		}
 	}
+	
 	return false;//
+
+}
+
+
+void GameControl::CreatEnemy(void)
+{
+	enemyTank e;
+
+	if (this->enemys.size() < MaxEnemys)
+	{
+		for (auto i = mapDate.enemybases.begin(); i != mapDate.enemybases.end(); i++)
+		{
+			bool falg = true;//该基地是否可用
+			for (auto j = enemys.begin(); j != enemys.end(); j++)
+			{
+				if ((*i).available)
+					if (collision(&(*i), &(*j)))
+						falg = false;//有坦克，不可用
+			}
+			if (falg)//生成一个就结束
+			{
+				e.x = (*i).x;
+				e.y = (*i).y;
+				e.w = TANK_W;
+				e.h = TANK_H;
+				e.level = 1;
+				e.id = idMaker.out();
+				e.available = true;
+				enemys.push_back(e);
+
+			}
+		}
+	}
+
 
 }
 Graph& GameControl::creatGraph()
@@ -546,6 +599,7 @@ Graph& GameControl::creatGraph()
 		}
 	}
 
+	return temp;
 
 }
 

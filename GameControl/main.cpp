@@ -2,7 +2,7 @@
 #include<conio.h>
 #include<graphics.h>
 #include<Windows.h>
-
+using namespace std;
 //图片资源
 IMAGE p_wall;
 IMAGE p_strongwall;
@@ -18,21 +18,30 @@ IMAGE p_enemy_w;
 IMAGE p_enemy_s;
 IMAGE p_enemy_a;
 IMAGE p_enemy_d;
+IMAGE p_water;
+IMAGE p_grass;
+
 
 IMAGE p_playerbase;
 GameControl mainGame;
 
-
+struct Pos
+{
+	int x;
+	int y;
+};
 
 void loadPicture();
 void Draw(GameControl& gc);
 void Draw_1(GameControl& gc);
+void gameOver();
 int main()
 {
 	initgraph(640, 480);
+	setaspectratio(0.7, 0.7);
 	loadPicture();
 	//setaspectratio(1, -1);
-	setorigin(100, 100);
+	setorigin(16, 16);
 	mainGame.start(1);
 	BeginBatchDraw();
 
@@ -43,14 +52,12 @@ int main()
 			int  falg= mainGame.run();
 			if (falg == 0) 
 			{
-				cleardevice();
-				outtextxy(300, 200,"游戏结束");
-				_getch();
+				goto END;
 			}
 			Draw(mainGame);
 			mainGame.clearDieObject();
 			FlushBatchDraw();
-			Sleep(200);
+			Sleep(100);
 			cleardevice();
 		}
 		char c = _getch();
@@ -58,12 +65,18 @@ int main()
 	}
 	EndBatchDraw();
 	closegraph();
+
+
+END:
+	cleardevice();
+	gameOver();
 	return 0;
 }
 
 
 void Draw(GameControl& gc)
 {
+	list<Pos>grasses;
 
 	for (int i = 0; i < gc.mapDate.data.size(); i++)
 	{
@@ -86,6 +99,18 @@ void Draw(GameControl& gc)
 					- gc.mapDate.data[i][j].h / 2,
 					&p_strongwall
 				); break;
+			case objectCate::water:
+				putimage(gc.mapDate.data[i][j].x
+					- gc.mapDate.data[i][j].w / 2,
+					gc.mapDate.data[i][j].y
+					- gc.mapDate.data[i][j].h / 2,
+					&p_water
+				); break;
+			case objectCate::grass:
+				grasses.push_back
+				({ gc.mapDate.data[i][j].x,
+					gc.mapDate.data[i][j].y });
+				
 			case objectCate::space:
 				/*
 				rectangle(gc.mapDate.data[i][j].x
@@ -188,11 +213,18 @@ void Draw(GameControl& gc)
 			putimage((*i).x - (*i).w / 2,
 				(*i).y - (*i).h / 2,
 				&p_enemy);
-			circle((*i).x, (*i).y, (*i).w);
+			//circle((*i).x, (*i).y, (*i).w);
 		}
 	}
 
-	
+	for (auto i = grasses.begin(); i != grasses.end(); i++)
+	{
+		putimage(
+			(*i).x- gc.mapDate.data[0][0].w / 2,
+			(*i).y- gc.mapDate.data[0][0].h / 2,
+			&p_grass
+		);
+	}
 }
 
 void Draw_1(GameControl& gc)
@@ -319,6 +351,14 @@ void Draw_1(GameControl& gc)
 
 }
 
+void gameOver()
+{
+	IMAGE p;
+	loadimage(&p,"gameover.jpg",640,480);
+	putimage(0, 0, &p);
+
+}
+
 
 
 
@@ -327,7 +367,9 @@ void loadPicture()
 	loadimage(&p_wall, "p_wall.jpg", 32, 32);
 	loadimage(&p_strongwall, "p_strongwall.jpg", 32, 32);
 	loadimage(&p_player, "p_player.jpg", 32, 32);
-	
+	loadimage(&p_grass, "p_grass.jpg", 32, 32);
+	loadimage(&p_water, "p_water.jpg", 32, 32);
+
 	loadimage(&p_tank_w, "tank_w.jpg", 32, 32);
 	loadimage(&p_tank_s, "tank_s.jpg", 32, 32);
 	loadimage(&p_tank_a, "tank_a.jpg", 32, 32);

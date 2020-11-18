@@ -18,8 +18,8 @@
 */
 
 static int TANK_W = 32; static int TANK_H = 32;
-static int BULLET_W = 16; static int BULLET_H = 16;
-static int MAP_W = 10; static int MAP_H = 10;
+static int BULLET_W = 16;  static int BULLET_H = 16;
+static int MAP_W = 20; static int MAP_H = 20;
 static int MAPOBJECT_W = TANK_W;
 static int MAPOBJECT_H = TANK_H;
 static int WIN_W = TANK_W * MAP_W;
@@ -62,10 +62,11 @@ private:
 	bool collision(Object* o1, Object* o2);//矩形碰撞检测
 	cmd c_to_cmd(char c);//将字符转换为cmd
 	bool CreatEnemy(enemyTank e);//在基地中生成一个敌人
-
+	void CreatEnemy(void);
 
 private:
 	Graph& creatGraph();
+	int level;
 	
 	
 };

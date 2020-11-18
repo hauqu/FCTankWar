@@ -13,7 +13,7 @@ enum class objectCate//物体的几种类型
 {
 	playerTank=0, enemyTank, Bullet,
 	space, wall,enemyBase,playerBase,
-	falg,water,galss,strongWall
+	falg,water,grass,strongWall
 };//该类型能够被GameControl分类处理
 enum class cmd//基础指令
 {
@@ -52,7 +52,7 @@ struct node
 class Graph {
 public:
 	vector<vector<node>>G;
-	const int K;//k 用于生成对应坐标
+	int K;//k 用于生成对应坐标
 	Graph(int w, int h, int mapsize) :K(mapsize) //全通图
 	{
 
